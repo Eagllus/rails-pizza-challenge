@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+.order {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-items ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.order-items ul ul {
+  list-style-type: circle;
+}

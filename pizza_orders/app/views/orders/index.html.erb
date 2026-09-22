@@ -1,0 +1,40 @@
+<h1 class="text-4xl font-bold tracking-tight text-gray-900">
+  Orders
+</h1>
+<hr />
+
+<% @orders.each do |order| %>
+  <div class="order">
+    <div class="order-details">
+      <p>ID: <%= order.source_id %></p>
+      <p>Created: <%= order.created_at.strftime("%B %-d, %Y %H:%M") %></p>
+      <p>Promotion Codes: <%= order.promotion_codes.presence&.join(", ") || "-" %></p>
+      <p>Discount Codes: <%= order.discount_code || "-" %></p>
+      <br/>
+      <p>Total Price: <%= number_to_currency(order.total_price, unit: "", format: "%n€") %></p>
+      <br/>
+      <%= button_to "Complete", order_path(order), method: :patch, class: "flex items-center bg-blue-500 px-2 py-1 hover:bg-blue-400" %>
+    </div>
+
+    <div class="order-items">
+      <p>Items:</p>
+      <ul>
+        <% order.order_items.each do |item| %>
+          <li>
+            <%= item.pizza.name %> (<%= item.size %>)
+            <% if item.extra_ingredients.any? %>
+              <ul>
+                <li>Add: <%= item.extra_ingredients.join(", ") %></li>
+              </ul>
+            <% end %>
+            <% if item.omitted_ingredients.any? %>
+              <ul>
+                <li>Remove: <%= item.omitted_ingredients.join(", ") %></li>
+              </ul>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
